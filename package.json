@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/DataVISEN/server/issues"
   },
-  "homepage": "https://github.com/DataVISEN/server#readme"
+  "homepage": "https://github.com/DataVISEN/server#readme",
+  "dependencies": {
+    "ws": "^5.0.0"
+  }
 }

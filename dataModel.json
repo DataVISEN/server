@@ -1,0 +1,43 @@
+{
+	"type": "consultation",
+	"payload": {
+		"id": 123
+	}
+}
+
+{
+	"type": "history",
+	"payload": {
+		"id": 123,
+		"from": 123456,
+		"to": 123456
+	}
+}
+
+
+{
+	"type": "patient",
+	"payload": {
+		"name": "bob",
+		"surname": "léponge",
+		"birth": 123456,
+		"gender": "M"
+	}
+}
+
+VALUE_NAME = arterial_pressure_sys, arterial_pressure_dia, temperature, oxygen_level, heartbeat, respiratory_rate
+{
+	"type": "data",
+	"payload": {
+		"VALUE_NAME": [
+			{
+				"time": 123456,
+				"value": 42
+			},
+			{
+				"time": 123456,
+				"value": 42
+			}
+		]
+	}
+}
