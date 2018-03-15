@@ -5,6 +5,8 @@ let WebSocket = require('ws')
 let patient = require('./model/patient')
 let donnees = require('./model/donnees')
 
+require('./model/db').initDB()
+
 let server = http.createServer((req, res) => {
 	fs.readFile('./index.html', 'utf-8', (error, content) => {
 		res.writeHead(200, { "Content-Type": "text/html" })

@@ -1,15 +1,5 @@
 let fakeDatas = require('./fakeDatas')
-let sqlite3 = require('sqlite3').verbose()
-
-let db = new sqlite3.Database(__dirname + "/../db.db", (err) => {
-  if (err) {
-    console.error(err.message)
-  }
-  else{
-	  console.log('Connected to the server database.')
-  }
-})
-
+let db = require('./db')
 
 module.exports.VALUE_TYPES = {
 	arterial_pressure_dia: "arterial_pressure_dia",
@@ -24,7 +14,7 @@ module.exports.getDonnes = (patientID, fromTimeStamp, toTimeStamp) => {
 	return new Promise((resolve, reject) => {
 		let sql = `SELECT * FROM donnees WHERE id  = ? and temps BETWEEN ? AND ? ORDER BY temps`;
 
-		db.all(sql, [patientID, fromTimeStamp, toTimeStamp], (err, rows) => {
+		db.getDB().all(sql, [patientID, fromTimeStamp, toTimeStamp], (err, rows) => {
 			if (err) {
 				return reject(err)
 			}
