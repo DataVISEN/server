@@ -32,10 +32,26 @@ wss.on('connection', ws => {
 
 		switch (json.type) {
 			case "patientFetch":
-				ws.send(createEventMessage("patientSent", patient.getPatient(id)))
+				patient.getPatient(id).then(
+					patient => {
+						console.log(patient)
+						ws.send(createEventMessage("patientSent", patient))
+					},
+					err => {
+						console.error(err)
+						ws.send(createEventMessage("patientSent", null))
+					})
 				break
 			case "donneesFetch":
-				ws.send(createEventMessage("donneesSent", donnees.getDonnes(id, from, to)))
+				donnees.getDonnes(id, from, to).then(
+					donnees => {
+						console.log(donnees)
+						ws.send(createEventMessage("donneesSent", donnees))
+					},
+					err => {
+						console.error(err)
+						ws.send(createEventMessage("patientSent", null))
+					})
 				break
 		}
 	})

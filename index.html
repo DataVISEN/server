@@ -12,8 +12,8 @@
 		let con = new WebSocket('ws://localhost:8080')
 		con.onopen = (e) => {
 			console.log("open", e)
-			let now = Math.floor(Date.now() / 1000)
-			let lastMonth = now - 31 * 24 * 60 * 60
+			let now = Date.now()
+			let lastMonth = now - 31 * 24 * 60 * 60 * 1000
 			con.send(JSON.stringify({
 				type: "patientFetch",
 				payload: {
