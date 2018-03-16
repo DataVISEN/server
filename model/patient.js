@@ -9,6 +9,9 @@ module.exports.getPatient = (patientID) => {
 			if (err) {
 				return reject(err)
 			}
+			if(!row) {
+				row = null
+			}
 			resolve(row)
 		});
 	})
