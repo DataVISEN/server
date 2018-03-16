@@ -18,25 +18,20 @@ let server = http.createServer((req, res) => {
 
 server.listen(8081)
 
+setInterval(() => {
+	console.log("Gererating fake datas")
+	donnees.insertFakeDonnes(1)
+	donnees.insertFakeDonnes(2)
+}, 30 * 1000)
+
 let wss = new WebSocket.Server({ port: 8080 })
 wss.on('connection', ws => {
 	let intervalID = null
 
 	console.log("== Client connected ==")
-	if (!generatingData) {
-		generatingData = true
-		intervalID = setInterval(() => {
-			donnees.insertFakeDonnes(1)
-			donnees.insertFakeDonnes(2)
-		}, 30 * 1000)
-	}
 
 	ws.on("close", () => {
 		console.log("== Client gone ==")
-		if (generatingData) {
-			clearInterval(intervalID)
-			generatingData = false
-		}
 	})
 
 	ws.on('message', msg => {
