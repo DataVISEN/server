@@ -7,6 +7,8 @@ let donnees = require('./model/donnees')
 
 require('./model/db').initDB()
 
+let generatingData = false
+
 let server = http.createServer((req, res) => {
 	fs.readFile('./index.html', 'utf-8', (error, content) => {
 		res.writeHead(200, { "Content-Type": "text/html" })
@@ -18,10 +20,29 @@ server.listen(8081)
 
 let wss = new WebSocket.Server({ port: 8080 })
 wss.on('connection', ws => {
+	let intervalID = null
+
+	console.log("== Client connected ==")
+	if (!generatingData) {
+		generatingData = true
+		intervalID = setInterval(() => {
+			donnees.insertFakeDonnes(1)
+			donnees.insertFakeDonnes(2)
+		}, 30 * 1000)
+	}
+
+	ws.on("close", () => {
+		console.log("== Client gone ==")
+		if (generatingData) {
+			clearInterval(intervalID)
+			generatingData = false
+		}
+	})
+
 	ws.on('message', msg => {
 		console.log("---")
 		let json = readEventMessage(msg)
-		if(json == undefined) {
+		if (json == undefined) {
 			console.error("Invalid message: ", msg)
 			return
 		}
